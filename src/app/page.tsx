@@ -1,8 +1,9 @@
+import { connectToDB } from "@/config/dbConfig";
 import { UserButton } from "@clerk/nextjs";
 import { currentUser } from "@clerk/nextjs/server";
-
+connectToDB();
 export default async function Home() {
-  const loggedInUserData = await currentUser();
+  const loggedInUserData: any = await currentUser();
   return (
     <div className="p-10">
       <div className="flex flex-col gap-3 text-3xl">
