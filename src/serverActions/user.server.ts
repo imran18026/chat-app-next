@@ -21,12 +21,17 @@ export const GetCurrentUserFromDB = async () => {
       username: string | null | undefined;
       email: string | undefined;
       profilePicture: string | undefined;
+      bio?: string;
+      createdAt?: Date;
+      updatedAt?: Date;
     } = {
       clerkUserId: clerkUser?.id,
       name: clerkUser?.firstName + " " + clerkUser?.lastName,
       username: clerkUser?.username,
       email: clerkUser?.emailAddresses[0].emailAddress,
       profilePicture: clerkUser?.imageUrl,
+      createdAt: new Date(),
+      updatedAt: new Date(),
     };
 
     const newUser = await UserModel.create(newUserPayload);
