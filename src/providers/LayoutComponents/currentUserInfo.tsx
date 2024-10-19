@@ -1,22 +1,25 @@
 "use client";
 import { UserType } from "@/interfaces";
+import { UserState } from "@/redux/userSlice";
 import { useClerk } from "@clerk/nextjs";
 import { Drawer, message } from "antd";
 import dayjs from "dayjs";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
 import React, { useState } from "react";
+import { useSelector } from "react-redux";
 
 const CurrentUserInfo = ({
-  currentUser,
   showCurrentUserInfo,
   setShowCurrentUserInfo,
 }: {
-  currentUser: UserType | null;
   showCurrentUserInfo: boolean;
   setShowCurrentUserInfo: React.Dispatch<React.SetStateAction<boolean>>;
 }) => {
   const [loading, setLoading] = useState<boolean>(false);
+  const { currentUserData }: UserState = useSelector(
+    (state: any) => state.user
+  );
   const getProperty = (key: string, value: string | null) => {
     return (
       <div className="flex flex-col">
@@ -34,6 +37,7 @@ const CurrentUserInfo = ({
       await signOut();
       setShowCurrentUserInfo(false);
       message.success("Logged out successfully");
+      setLoading(true);
       router.push("/sign-in");
     } catch (error: any) {
       message.error(error.message);
@@ -47,11 +51,11 @@ const CurrentUserInfo = ({
       onClose={() => setShowCurrentUserInfo(false)}
       title="Profile"
     >
-      {currentUser && (
+      {currentUserData ? (
         <div className="flex flex-col gap-5">
           <div className="flex flex-col gap-5 justify-center items-center">
             <Image
-              src={currentUser?.profilePicture}
+              src={currentUserData?.profilePicture}
               width={200}
               height={200}
               alt="profile"
@@ -61,12 +65,12 @@ const CurrentUserInfo = ({
             </span>
           </div>
           <div className="flex flex-col gap-5">
-            {getProperty("Name", currentUser?.name)}
-            {getProperty("Username", currentUser?.username)}
-            {getProperty("id", currentUser?._id)}
+            {getProperty("Name", currentUserData?.name)}
+            {getProperty("Username", currentUserData?.username)}
+            {getProperty("id", currentUserData?._id)}
             {getProperty(
               "joined on",
-              dayjs(currentUser?.createdAt).format("DD-MM-YYYY : hh:mm  A")
+              dayjs(currentUserData?.createdAt).format("DD-MM-YYYY : hh:mm  A")
             )}
           </div>
           <div className="mt-5">
@@ -80,7 +84,7 @@ const CurrentUserInfo = ({
             </button>
           </div>
         </div>
-      )}
+      ) : null}
     </Drawer>
   );
 };
