@@ -66,7 +66,7 @@ const CurrentUserInfo = ({
             {getProperty("id", currentUser?._id)}
             {getProperty(
               "joined on",
-              dayjs(currentUser?.createdAt).format("DD-MM-YYYY : hh:mm  A")
+              dayjs(currentUser?.createdAt).format("DD-MM-YYYY : hh:mm  A")
             )}
           </div>
           <div className="mt-5">
