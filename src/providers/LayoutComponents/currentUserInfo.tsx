@@ -1,5 +1,4 @@
 "use client";
-import { UserType } from "@/interfaces";
 import { UserState } from "@/redux/userSlice";
 import { useClerk } from "@clerk/nextjs";
 import { Drawer, message } from "antd";

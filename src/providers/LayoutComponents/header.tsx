@@ -1,12 +1,12 @@
 "use client";
 import { UserType } from "@/interfaces";
+import { SetCurrentUser, UserState } from "@/redux/userSlice";
 import { GetCurrentUserFromDB } from "@/serverActions/user.server";
 import { Avatar, message } from "antd";
 import { usePathname } from "next/navigation";
 import { useEffect, useState } from "react";
-import CurrentUserInfo from "./currentUserInfo";
 import { useDispatch, useSelector } from "react-redux";
-import { SetCurrentUser, UserState } from "@/redux/userSlice";
+import CurrentUserInfo from "./currentUserInfo";
 
 export const Header = () => {
   const dispatch = useDispatch();
@@ -19,8 +19,6 @@ export const Header = () => {
 
   const isPublicRoute =
     pathName?.includes("/sign-in") || pathName?.includes("/sign-up");
-
-  if (isPublicRoute) return null;
 
   const getCurrentUser = async () => {
     try {
@@ -37,6 +35,7 @@ export const Header = () => {
   useEffect(() => {
     getCurrentUser();
   }, []);
+  if (isPublicRoute) return null;
 
   return (
     <div className="bg-gray-200 w-full py-1 flex justify-between items-center px-5 mr-20 mt-16 max-w-screen-xl min-h-full border-b border-gray-600">
