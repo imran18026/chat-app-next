@@ -45,15 +45,7 @@ const CurrentUserInfo = ({
       setLoading(false);
     }
   };
-  const onUpdateProfilePicture = async () => {
-    try {
-      message.success("Profile picture updated successfully");
-      setLoading(true);
-      router.push("/sign-in");
-    } catch (error: any) {
-      message.error(error.message);
-    }
-  };
+  const onUpdateProfilePicture = async () => {};
   return (
     <Drawer
       open={showCurrentUserInfo}
@@ -80,11 +72,7 @@ const CurrentUserInfo = ({
               className="cursor-pointer"
               listType={selectedFile ? "picture-circle" : "text"}
               maxCount={1}
-            >
-              <span className="text-gray-950 font-bold">
-                {selectedFile ? "Change Picture" : "Upload Profile Picture"}
-              </span>
-            </Upload>
+            ></Upload>
           </div>
           <div className="flex flex-col gap-5">
             {getProperty("Name", currentUserData?.name)}
@@ -98,20 +86,21 @@ const CurrentUserInfo = ({
           <div className="mt-5 flex flex-col gap-5">
             <Button
               className="text-gray-500 w-full border-t border-gray-300 py-3"
+              loading={loading}
+              block
+              onClick={onLogOut}
+            >
+              Log Out
+            </Button>
+
+            <Button
+              className="text-gray-500 w-full border-t border-gray-300 py-3"
               disabled={!selectedFile}
               loading={loading}
               block
               onClick={onUpdateProfilePicture}
             >
               Update Profile Picture
-            </Button>
-            <Button
-              className="text-gray-500 w-full border-t border-gray-300 py-3"
-              loading={loading}
-              block
-              onClick={onLogOut}
-            >
-              Log Out
             </Button>
           </div>
         </div>
