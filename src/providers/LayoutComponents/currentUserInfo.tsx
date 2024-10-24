@@ -1,4 +1,5 @@
 "use client";
+import { UploadImageToFirebaeAndReturnUrl } from "@/helpers/imageUploades";
 import { UserState } from "@/redux/userSlice";
 import { useClerk } from "@clerk/nextjs";
 import { Button, Drawer, message, Upload } from "antd";
@@ -47,11 +48,13 @@ const CurrentUserInfo = ({
       setLoading(false);
     }
   };
+
   const onUpdateProfilePicture = async () => {
     try {
+      const response: string = await UploadImageToFirebaeAndReturnUrl(
+        selectedFile!
+      );
       message.success("Profile picture updated successfully");
-      setLoading(true);
-      router.push("/sign-in");
     } catch (error: any) {
       message.error(error.message);
     }
