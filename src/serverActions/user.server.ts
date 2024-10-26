@@ -2,7 +2,7 @@
 import { connectToDB } from "@/config/dbConfig";
 import { UserModel } from "@/models/user.model";
 import { currentUser } from "@clerk/nextjs/server";
-
+// db connection
 connectToDB();
 
 export const GetCurrentUserFromDB = async () => {
